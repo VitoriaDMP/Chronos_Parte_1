@@ -1,6 +1,6 @@
-# bd_drugs
-Drug Consumption Prediction Project
+# Chronos_Parte_1
+Trabalho 1 de banco de dados da disciplina MC536 da Unicamp por Giovanna Vendramini e Vitoria Dias Moreira Pinho
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/helderbetiol/bd_drugs/master?filepath=jupyter%2Ftrabalho-%20etapa02.ipynb)
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/helderbetiol/bd_drugs/master)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/VitoriaDMP/Chronos_Parte_1/master)
+
 
