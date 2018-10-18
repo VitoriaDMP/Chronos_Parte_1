@@ -1,0 +1,204 @@
+análises propostas:
+
+-> porcentagem de pessoas maiores de 60 anos que desenvolvem a doença VERSUS menores
+-> porcentagem de mulheres que desenvolvem a doença versus quantidade de homens que desenvolvem a doença
+-> qual o maior indice de pessoas doentes considerando idade/sexo?
+-> porcentagem de mulheres grávidas que desenvolvem a doença
+-> porcentagem de pessoas com goitre que desenvolvem a doença
+-> dentre as análises de cima, é maior a incidência de hypo ou de hyper ?
+-> dentre os itens de exame pedidos verificar qual os menores e maiores valores para hipo/hyper (ou seja para o exame de tsh, por exemplo verificar a "faixa" em que estava o tsh de pessoas com hipotyroidismo)
+
+--SEPARAÇÃO DOENCAS DO TIPO HYPO E HYPER
+CREATE VIEW HYPO AS SELECT id_disease FROM DISEASE WHERE name = 'hypothyroid';
+CREATE VIEW HYPER AS SELECT id_disease FROM DISEASE WHERE name = 'hyperthyroid';
+
+--Consulta para calculo da porcentagem de pessoas maiores de 60 anos que desenvolvem algum disturbio de tireoide
+--Pessoas maiores de 60 anos
+CREATE VIEW AGE_GRATER  AS SELECT id_patient, id_disease, sex FROM PATIENT WHERE age > 60;
+--Total de pessoas
+SELECT COUNT(*) total FROM AGE_GRATER;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM AGE_GRATER  WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM AGE_GRATER AG, HYPO H WHERE AG.id_disease = H.id_disease ); 
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM AGE_GRATER AG, HYPER H WHERE AG.id_disease = H.id_disease);
+
+Resultados
+2088
+1982
+Porcentagem de doentes:  5,08%
+82   => 77,4% 
+24   => 22,6%
+
+--Consulta para calculo da porcentagem de pessoas menores de 60 anos que desenvolvem algum disturbio de tireoide
+--Pessoas maiores de 60 anos
+CREATE VIEW AGE_LESS AS SELECT id_patient, id_disease, sex FROM PATIENT WHERE age <= 60 and age IS NOT NULL;
+--Total de pessoas
+SELECT COUNT(*) total FROM AGE_LESS;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM AGE_LESS  WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM AGE_LESS  AL, HYPO H WHERE AL.id_disease = H.id_disease );
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM AGE_LESS  AL, HYPER H WHERE AL.id_disease = H.id_disease );
+
+Resultados
+3510
+3319
+Porcentagem de doentes:  5,44%
+138    =>  77,3%
+53   => 	22,7%
+
+--Consulta para calculo da porcentagem de mulheres que desenvolvem algum disturbio de tireoide
+--Mulheres
+CREATE VIEW WOMEN  AS SELECT id_patient, id_disease, pregnant FROM PATIENT WHERE sex = 'F';
+--Total de pessoas
+SELECT COUNT(*) total FROM WOMEN;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM WOMEN WHERE id_disease IS NULL; 
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM WOMEN  W, HYPO H WHERE W.id_disease = H.id_disease ); 
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM WOMEN W, HYPER H WHERE W.id_disease = H.id_disease );
+
+Resultados
+3660
+3438
+Porcentagem de doentes:  6,07%
+158    => 71,2%
+64    =>  28,8%
+
+--Consulta para calculo da porcentagem de homens que desenvolvem algum disturbio de tireoide
+--Pessoas maiores de 60 anos
+CREATE VIEW MEN AS SELECT id_patient, id_disease FROM PATIENT WHERE sex = 'M';
+--Total de pessoas
+SELECT COUNT(*) total FROM MEN;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM MEN WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM MEN  M, HYPO H WHERE M.id_disease = H.id_disease ); 
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM MEN M, HYPER H WHERE M.id_disease = H.id_disease );
+
+Resultados
+1720
+1659
+Porcentagem de doentes:  3,55%
+53    => 86,9%
+8    =>  13,1%
+
+--PORCENTAGENS CONSIDERANDO idade/sexo
+--Consulta para calculo da porcentagem de mulheres maiores de 60 anos que desenvolvem algum disturbio de tireoide
+--Mulheres
+CREATE VIEW WOMEN_GRATER AS SELECT id_patient, id_disease FROM AGE_GRATER WHERE sex = 'F';
+--Total de pessoas
+SELECT COUNT(*) total FROM WOMEN_GRATER;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM WOMEN_GRATER WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM WOMEN_GRATER  W, HYPO H WHERE W.id_disease = H.id_disease );
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM WOMEN_GRATER W, HYPER H WHERE W.id_disease = H.id_disease );
+
+Resultados
+1414
+1338
+Porcentagem de doentes:  5,37%
+56    =>  73,7%
+20    =>  26,3%
+
+
+--Consulta para calculo da porcentagem de mulheres menores de 60 anos que desenvolvem algum disturbio de tireoide
+--Mulheres
+CREATE VIEW WOMEN_LESS  AS SELECT id_patient, id_disease FROM AGE_LESS WHERE sex = 'F';
+--Total de pessoas
+SELECT COUNT(*) total FROM WOMEN_LESS;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM WOMEN_LESS WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM WOMEN_LESS  W, HYPO H WHERE W.id_disease = H.id_disease ); 
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM WOMEN_LESS W, HYPER H WHERE W.id_disease = H.id_disease );
+
+Resultados
+2244
+2098
+Porcentagem de doentes:  6,51%
+102    =>  69,9%  
+44    =>  30,1%
+
+--Consulta para calculo da porcentagem de homens maiores de 60 anos que desenvolvem algum disturbio de tireoide
+--homens maiores de 60 anos
+CREATE VIEW MEN_GRATER AS SELECT id_patient, id_disease FROM AGE_GRATER WHERE sex = 'M';
+--Total de pessoas
+SELECT COUNT(*) total FROM MEN_GRATER;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM MEN_GRATER WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM MEN_GRATER  M, HYPO H WHERE M.id_disease = H.id_disease ); 
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM MEN_GRATER M, HYPER H WHERE M.id_disease = H.id_disease );
+
+Resultados
+590
+566
+Porcentagem de doentes:  4,07%
+22    => 91,7%  
+2    =>  8,3%
+
+--Consulta para calculo da porcentagem de pessoas menores de 60 anos que desenvolvem algum disturbio de tireoide
+--Homens menores de 60 anos
+CREATE VIEW MEN_LESS AS SELECT id_patient, id_disease FROM AGE_LESS WHERE sex = 'M';
+--Total de pessoas
+SELECT COUNT(*) total FROM MEN_LESS;
+--Total de pessoas sem doença
+SELECT COUNT(*) no_disease FROM MEN_LESS WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM MEN_LESS   M, HYPO H WHERE M.id_disease = H.id_disease ); 
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM MEN_LESS  M, HYPER H WHERE M.id_disease = H.id_disease );
+
+Resultados:
+1130
+1093
+Porcentagem de doentes:  3,27%
+31    => 83,8% 
+6    =>  16,2%
+
+
+-- Consulta para porcentagem de mulheres grávidas que desenvolvem doenças
+CREATE VIEW WOMEN_PREGNANT AS SELECT id_patient, id_disease FROM WOMEN WHERE pregnant = 't';
+--Total de pessoas
+SELECT COUNT(*) total FROM WOMEN_PREGNANT;
+--Total de mulheres que não estão doentes
+SELECT COUNT(*) no_pregnant FROM WOMEN_PREGNANT WHERE id_disease IS NULL; 
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM WOMEN_PREGNANT W, HYPO H WHERE W.id_disease = H.id_disease );
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM WOMEN_PREGNANT W, HYPER H WHERE W.id_disease = H.id_disease );
+
+Resultados:
+80
+75
+Porcentagem de doentes:   6,25%
+0    =>  0%
+5    =>  100%
+
+-- Consulta para porcentagem de pessoas com tumor que desenvolvem a doença
+CREATE VIEW PEOPLE_TUMOR AS SELECT id_patient, id_disease FROM PATIENT WHERE tumor = 't';
+--Total de pessoas
+SELECT COUNT(*) total FROM PEOPLE_TUMOR;
+--Total de pessoas com goitre que não estão doentes
+SELECT COUNT(*) no_tumor FROM PEOPLE_TUMOR WHERE id_disease IS NULL;
+-- Total de pessoas com hypo:
+SELECT COUNT(*) hypo_disease FROM (SELECT id_patient FROM PEOPLE_TUMOR   P, HYPO H WHERE P.id_disease = H.id_disease );
+-- Total de pessoas com hyper:
+SELECT COUNT(*) hyper_disease FROM (SELECT id_patient FROM PEOPLE_TUMOR  P, HYPER H WHERE P.id_disease = H.id_disease );
+
+Resultados
+142
+123
+Porcentagem de doentes:  13,38%
+7    =>  36,8%
+12    =>  63,2%
