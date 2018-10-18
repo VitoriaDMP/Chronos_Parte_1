@@ -1,0 +1,62 @@
+
+%defaultDatasource jdbc:h2:mem:db
+
+DROP TABLE IF EXISTS DISEASE;
+DROP TABLE IF EXISTS DIAGNOSIS;
+DROP TABLE IF EXISTS PATIENT;
+
+CREATE TABLE DISEASE(
+    id_disease VARCHAR(5) NOT NULL, 
+    name VARCHAR(20) NOT NULL, 
+    category VARCHAR(20),
+    PRIMARY KEY(id_disease)
+) AS SELECT 
+    id_disease, 
+    name, 
+    category
+
+FROM CSVREAD('disease.csv');
+
+--CREATE TABLE DIAGNOSIS(
+--   id_diagnosis VARCHAR(5) NOT NULL, 
+--   id_disease VARCHAR(5), 
+--   PRIMARY KEY(id_diagnosis),
+--  
+--) AS SELECT 
+--    id_diagnosis,
+--   id_disease
+
+--FROM CSVREAD('diagnosis.csv');
+
+CREATE TABLE PATIENT(
+    id_patient INTEGER NOT NULL,
+    id_diagnosis VARCHAR(5),
+    age INTEGER, 
+    sex CHAR,
+    pregnant BOOL,
+    tumor BOOL,
+    sick BOOL,
+    psych BOOL,
+    goitre BOOL,
+    PRIMARY KEY(id_patient),
+    FOREIGN KEY(id_diagnosis)
+        REFERENCES disease(id_disease)
+          ON DELETE NO ACTION
+          ON UPDATE NO ACTION,
+) AS SELECT 
+    id_patient,
+    id_diagnosis,
+    age,
+    sex,
+    pregnant,
+    tumor,
+    sick,
+    psych,
+    goitre
+
+FROM CSVREAD('patient.csv');
+
+
+
+SELECT * FROM DISEASE;
+SELECT * FROM PATIENT;
