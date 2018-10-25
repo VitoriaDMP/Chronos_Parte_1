@@ -1,0 +1,7 @@
+id_disease,name,category
+dis1,hyperthyroid,goitre
+dis2,hyperthyroid,T3 toxic
+dis3,hyperthyroid,
+dis4,hypothyroid,primary
+dis5,hypothyroid,secondary
+dis6,hypothyroid,compensated
