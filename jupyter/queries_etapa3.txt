@@ -1,0 +1,26 @@
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/VitoriaDMP/Chronos_Parte_1/master/dados/disease4.csv' AS line
+CREATE (:Disease { name: line.category, id: line.id_disease})
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/VitoriaDMP/Chronos_Parte_1/master/dados/disease3.csv' AS line
+CREATE (:Disease { name: line.name})
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/VitoriaDMP/Chronos_Parte_1/master/dados/disease4.csv' AS line
+MATCH (d1:Disease {name: line.name})
+MATCH (d2:Disease {id: line.id_disease})
+CREATE (d2)-[:Super]->(d1)
+
+Paciente -> Doenca
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/VitoriaDMP/Chronos_Parte_1/master/dados/patient.csv' 
+AS line
+CREATE (:Patient { id: line.id_patient})
+
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/VitoriaDMP/Chronos_Parte_1/master/dados/patient.csv' AS line
+MATCH (p:Patient { id: line.id_patient})
+MATCH (d:Disease {id: line.id_disease})
+CREATE (p)-[:Has]->(d)
+
+
+match (n)
+detach delete n
