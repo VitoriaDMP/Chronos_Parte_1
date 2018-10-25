@@ -1,4 +1,4 @@
-id_item,id_patient,name,result,value
+iditem,idpatient,name,result,value
 it1,1,onthyroxine,f,
 it1,2,onthyroxine,f,
 it1,3,onthyroxine,f,
