@@ -1,4 +1,4 @@
-id+AF8-item,id+AF8-patient,name,result,value
+id_item,id_patient,name,result,value
 it1,1,onthyroxine,f,
 it1,2,onthyroxine,f,
 it1,3,onthyroxine,f,
