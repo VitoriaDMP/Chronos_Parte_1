@@ -40,4 +40,4 @@ AS line
 MATCH(p: Patient {id: line.id_patient})
 MATCH(i: Item {name: line.name})
 WHERE line.result = 't'
-CREATE (p)-[:HasItem]->(i)
+CREATE (p)-[:HasItem{value: line.value}]->(i)
