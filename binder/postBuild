@@ -1,8 +1,6 @@
 #!/bin/bash
 
 beakerx install
-pip install sparqlkernel
-jupyter sparqlkernel install
 
 conda create -y -n labx 'python>=3'
 source activate labx
@@ -14,6 +12,9 @@ jupyter nbextension enable --py widgetsnbextension
 jupyter nbextension enable python-markdown/main
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install beakerx-jupyterlab
+
+pip install sparqlkernel
+jupyter sparqlkernel install
 
 #jupyter labextension install @jupyterlab/geojson-extension jupyterlab-drawio
 #jupyter lab clean
