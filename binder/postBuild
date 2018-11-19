@@ -1,6 +1,8 @@
 #!/bin/bash
 
 beakerx install
+pip install sparqlkernel
+jupyter sparqlkernel install
 
 conda create -y -n labx 'python>=3'
 source activate labx
