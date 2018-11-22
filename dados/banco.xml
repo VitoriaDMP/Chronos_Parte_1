@@ -59747,20 +59747,12 @@
 <diseases>
 <disease name="hyperthyroid">
      <subdisease name="goitre"  id_disease = "dis1" />
-</disease>
-<disease name="hyperthyroid">
      <subdisease name="T3 toxic"  id_disease = "dis2" />
-</disease>
-<disease name="hyperthyroid">
      <subdisease name=""  id_disease = "dis3" />
 </disease>
 <disease name="hypothyroid">
      <subdisease name="primary"  id_disease = "dis4" />
-</disease>
-<disease name="hypothyroid">
      <subdisease name="secondary"  id_disease = "dis5" />
-</disease>
-<disease name="hypothyroid">
      <subdisease name="compensated"  id_disease = "dis6" />
 </disease>
 </diseases>
@@ -59772,4 +59764,14 @@
 <item name="t4u" />
 <item name="fti" />
 </items>
+<attributes>
+  <attribute name="age" />
+  <attribute name="male" />
+  <attribute name="female" />
+  <attribute name="pregnant" />
+  <attribute name="tumor" />
+  <attribute name="sick" />
+  <attribute name="psych" />
+  <attribute name="goitre" />
+</attributes>
 </banco>
